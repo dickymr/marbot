@@ -1,6 +1,7 @@
 import httpStatus from 'http-status';
 import logger from '../config/logger';
 import { getProfile, sendMessage } from '../services';
+import { addNewSubscriber } from '../services/subscriber.service';
 import { Event } from '../types';
 
 export const newSubscriber = async (event: Event) => {
@@ -24,15 +25,16 @@ export const newSubscriber = async (event: Event) => {
 
   const message = messages.join('\n\n');
 
+  const profile = await getProfile(employee_code);
+  logger.info(`New bot subscriber ${employee_code} ${profile.name}`);
+
   await sendMessage({
     senderId: employee_code,
     content: message,
     type: 'personal',
   });
 
-  const profile = await getProfile(employee_code);
-
-  logger.info(`New bot subscriber ${employee_code} ${profile.name}`);
+  await addNewSubscriber(employee_code, profile.name);
 
   return {
     status: httpStatus.OK,
