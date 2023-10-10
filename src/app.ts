@@ -5,7 +5,7 @@ import cors from 'cors';
 import httpStatus from 'http-status';
 import config from './config';
 import morgan from './config/morgan';
-import { checkPrayerTime } from './helpers';
+import { checkPrayerTime, checkReminder } from './helpers';
 import xss from './middlewares/xss';
 import { errorConverter, errorHandler } from './middlewares/error';
 import routes from './routes/v1';
@@ -51,11 +51,14 @@ app.use(errorConverter);
 // handle error
 app.use(errorHandler);
 
-const runCheckPrayerTime = () => {
+const runPrayerTimeChecks = () => {
   const interval = 60000; // 1 MINUTE
-  setInterval(checkPrayerTime, interval);
+  setInterval(() => {
+    checkPrayerTime();
+    checkReminder();
+  }, interval);
 };
 
-runCheckPrayerTime();
+runPrayerTimeChecks();
 
 export default app;

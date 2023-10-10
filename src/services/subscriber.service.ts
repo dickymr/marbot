@@ -32,9 +32,16 @@ const setNotification = async (id: string, state: boolean) => {
   });
 };
 
+const getSubscribersWithReminders = async (currentMinuteDifference: number) => {
+  return prisma.subscriber.findMany({
+    where: { reminder: currentMinuteDifference },
+  });
+};
+
 export {
   getUserById,
   addNewSubscriber,
   getSubscribersWithNotifications,
   setNotification,
+  getSubscribersWithReminders,
 };

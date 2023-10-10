@@ -1,32 +1,26 @@
-import config from '../config';
 import { getSubscribers, sendMessage } from '../services';
-import { getSubscribersWithNotifications } from '../services/subscriber.service';
+import { getSubscribersWithReminders } from '../services/subscriber.service';
 
-const sendReminderToSubscribers = async (message: string) => {
+const sendReminderToSubscribers = async (
+  message: string,
+  currentMinuteDifference: number
+) => {
   const botSubscribers = await getSubscribers();
-  const subscribersWithNotifications = await getSubscribersWithNotifications();
-
-  const subscribers = botSubscribers.filter((id: string) =>
-    subscribersWithNotifications.find((sub) => sub.id === id)
+  const subscribersWithReminders = await getSubscribersWithReminders(
+    currentMinuteDifference
   );
 
-  if (config.env === 'production') {
-    subscribers.forEach((subscriber: string) =>
-      sendMessage({
-        senderId: subscriber,
-        content: message,
-        type: 'personal',
-      })
-    );
+  const subscribers = botSubscribers.filter((id: string) =>
+    subscribersWithReminders.find((sub) => sub.id === id)
+  );
 
-    return;
-  }
-
-  sendMessage({
-    senderId: config.myEmployeeId,
-    content: message,
-    type: 'personal',
-  });
+  subscribers.forEach((subscriber: string) =>
+    sendMessage({
+      senderId: subscriber,
+      content: message,
+      type: 'personal',
+    })
+  );
 };
 
 export default sendReminderToSubscribers;
