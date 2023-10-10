@@ -17,7 +17,7 @@ prisma.$connect().then(() => {
 });
 
 const runCheckPrayerTime = () => {
-  const interval = 60000; // 1 MINUTE
+  const interval = 5000; // 1 MINUTE
   setInterval(checkPrayerTime, interval);
 };
 

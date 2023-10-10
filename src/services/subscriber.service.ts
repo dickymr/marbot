@@ -1,7 +1,9 @@
 import prisma from '../client';
 
 const getUserById = async (id: string) => {
-  return prisma.subscriber.findUnique({ where: { id } });
+  return prisma.subscriber.findUnique({
+    where: { id },
+  });
 };
 
 const addNewSubscriber = async (id: string, name: string) => {
@@ -12,11 +14,27 @@ const addNewSubscriber = async (id: string, name: string) => {
     });
   }
 
-  return prisma.subscriber.create({ data: { id, name } });
+  return prisma.subscriber.create({
+    data: { id, name },
+  });
 };
 
 const getSubscribersWithNotifications = async () => {
-  return prisma.subscriber.findMany({ where: { notification: true } });
+  return prisma.subscriber.findMany({
+    where: { notification: true },
+  });
 };
 
-export { getUserById, addNewSubscriber, getSubscribersWithNotifications };
+const setNotification = async (id: string, state: boolean) => {
+  return prisma.subscriber.update({
+    where: { id },
+    data: { notification: state },
+  });
+};
+
+export {
+  getUserById,
+  addNewSubscriber,
+  getSubscribersWithNotifications,
+  setNotification,
+};

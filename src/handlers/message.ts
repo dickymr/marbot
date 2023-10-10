@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import config from '../config';
 import logger from '../config/logger';
 import { getPrayerTimeToday, getProfile, sendMessage } from '../services';
+import { setNotification } from '../services/subscriber.service';
 import {
   getFormattedDate,
   getNextPrayerString,
@@ -62,8 +63,9 @@ export const message = async (event: Event) => {
 
   // /start
   if (message.text.content === '/start') {
-    const response = 'Feature still in development.';
+    await setNotification(employee_code, true);
 
+    const response = '🌟 Prayer time __notifications__ activated.';
     await sendMessage({
       senderId: employee_code,
       content: response,
@@ -75,8 +77,10 @@ export const message = async (event: Event) => {
 
   // /stop
   if (message.text.content === '/stop') {
-    const response = 'Feature still in development.';
+    await setNotification(employee_code, false);
 
+    const response =
+      '🚫 Prayer time __notifications__ and __reminders__ deactivated.';
     await sendMessage({
       senderId: employee_code,
       content: response,
