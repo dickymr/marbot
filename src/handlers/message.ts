@@ -2,7 +2,7 @@ import httpStatus from 'http-status';
 import config from '../config';
 import logger from '../config/logger';
 import { getPrayerTimeToday, getProfile, sendMessage } from '../services';
-import { setNotification } from '../services/subscriber.service';
+import { setNotification, setReminder } from '../services/subscriber.service';
 import {
   getFormattedDate,
   getNextPrayerString,
@@ -50,7 +50,24 @@ export const message = async (event: Event) => {
 
   // /reminder
   if (message.text.content.includes('/reminder')) {
-    const response = 'Feature still in development.';
+    let response = '';
+
+    const textMsg = message.text.content;
+    const textMatch = textMsg.match(/\/reminder ([0-9]|10)\b/);
+
+    if (textMatch) {
+      const minutes = parseInt(textMatch[1]);
+
+      await setReminder(employee_code, minutes);
+
+      // prettier-ignore
+      response = minutes === 0
+      ? '🔕 Reminder deactivated. You will no longer receive reminders.'
+      : `🔔 Reminder set to __${minutes} minute${minutes !== 1 ? 's' : ''}__ before prayer time.`;
+    } else {
+      response =
+        '⚠️ Reminder should be between 0 and 10 minutes. Please use /reminder [0-10 minutes].';
+    }
 
     await sendMessage({
       senderId: employee_code,
@@ -65,7 +82,7 @@ export const message = async (event: Event) => {
   if (message.text.content === '/start') {
     await setNotification(employee_code, true);
 
-    const response = '🌟 Prayer time __notifications__ activated.';
+    const response = '🔔 Prayer time __notifications__ activated.';
     await sendMessage({
       senderId: employee_code,
       content: response,
@@ -79,8 +96,7 @@ export const message = async (event: Event) => {
   if (message.text.content === '/stop') {
     await setNotification(employee_code, false);
 
-    const response =
-      '🚫 Prayer time __notifications__ and __reminders__ deactivated.';
+    const response = '🔕 Prayer time __notifications__ deactivated.';
     await sendMessage({
       senderId: employee_code,
       content: response,
@@ -134,7 +150,7 @@ export const message = async (event: Event) => {
 
   await sendMessage({
     senderId: employee_code,
-    content: 'Invalid command.',
+    content: '❌ Invalid command.',
     type: 'personal',
   });
 

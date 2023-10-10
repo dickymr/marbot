@@ -38,10 +38,18 @@ const getSubscribersWithReminders = async (currentMinuteDifference: number) => {
   });
 };
 
+const setReminder = async (id: string, minutes: number) => {
+  return prisma.subscriber.update({
+    where: { id },
+    data: { reminder: minutes },
+  });
+};
+
 export {
   getUserById,
   addNewSubscriber,
   getSubscribersWithNotifications,
   setNotification,
   getSubscribersWithReminders,
+  setReminder,
 };
