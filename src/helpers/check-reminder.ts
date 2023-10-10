@@ -8,6 +8,8 @@ import { getNextPrayerString } from '../utils';
 const checkReminder = async () => {
   const prayerTimes = await getPrayerTimeToday();
 
+  if (!prayerTimes) return null;
+
   const now = new Date();
   const localTime = format(utcToZonedTime(now, config.timeZone), 'HH:mm');
 
