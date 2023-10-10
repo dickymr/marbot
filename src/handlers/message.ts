@@ -1,5 +1,6 @@
 import httpStatus from 'http-status';
 import config from '../config';
+import logger from '../config/logger';
 import { getPrayerTimeToday, getProfile, sendMessage } from '../services';
 import {
   getFormattedDate,
@@ -133,12 +134,9 @@ export const message = async (event: Event) => {
     type: 'personal',
   });
 
-  // console.log(
-  //   'New message from',
-  //   employee_code,
-  //   profile.name,
-  //   message.text.content
-  // );
+  logger.info(
+    `New message from ${employee_code} ${profile.name} ${message.text.content}`
+  );
 
   return { status: httpStatus.NOT_FOUND, response: {} };
 };
