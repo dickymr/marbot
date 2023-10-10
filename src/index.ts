@@ -3,7 +3,6 @@ import app from './app';
 import prisma from './client';
 import config from './config';
 import logger from './config/logger';
-import { checkPrayerTime } from './helpers';
 
 let server: Server;
 
@@ -12,14 +11,8 @@ prisma.$connect().then(() => {
 
   server = app.listen(config.port, () => {
     logger.info(`Listening to port ${config.port}`);
-    runCheckPrayerTime();
   });
 });
-
-const runCheckPrayerTime = () => {
-  const interval = 5000; // 1 MINUTE
-  setInterval(checkPrayerTime, interval);
-};
 
 const exitHandler = () => {
   if (server) {

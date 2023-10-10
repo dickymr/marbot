@@ -5,9 +5,10 @@ import cors from 'cors';
 import httpStatus from 'http-status';
 import config from './config';
 import morgan from './config/morgan';
+import { checkPrayerTime } from './helpers';
 import xss from './middlewares/xss';
-import routes from './routes/v1';
 import { errorConverter, errorHandler } from './middlewares/error';
+import routes from './routes/v1';
 import apiError from './utils/apiError';
 
 const app = express();
@@ -49,5 +50,12 @@ app.use(errorConverter);
 
 // handle error
 app.use(errorHandler);
+
+const runCheckPrayerTime = () => {
+  const interval = 60000; // 1 MINUTE
+  setInterval(checkPrayerTime, interval);
+};
+
+runCheckPrayerTime();
 
 export default app;
