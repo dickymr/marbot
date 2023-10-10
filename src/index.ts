@@ -6,6 +6,7 @@ import logger from './config/logger';
 import { checkPrayerTime } from './helpers';
 
 let server: Server;
+
 prisma.$connect().then(() => {
   logger.info('Connected to SQL Database');
 
@@ -17,7 +18,7 @@ prisma.$connect().then(() => {
 
 const runCheckPrayerTime = () => {
   const interval = 60000; // 1 MINUTE
-  setInterval(() => checkPrayerTime, interval);
+  setInterval(checkPrayerTime, interval);
 };
 
 const exitHandler = () => {
