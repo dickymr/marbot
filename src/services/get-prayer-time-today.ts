@@ -8,16 +8,16 @@ let prayerTimes: Prayer | null | undefined = null;
 let lastUpdatedDate: string | null = null;
 
 // let prayerTimes = {
-//   imsyak: '16:30',
-//   shubuh: '16:31',
-//   terbit: '16:32',
-//   dhuha: '16:33',
-//   dzuhur: '16:34',
-//   ashr: '16:35',
-//   magrib: '16:36',
-//   isya: '16:37',
+//   imsyak: '19:20',
+//   shubuh: '19:21',
+//   terbit: '19:22',
+//   dhuha: '19:23',
+//   dzuhur: '19:24',
+//   ashr: '19:25',
+//   magrib: '19:26',
+//   isya: '19:27',
 // };
-// let lastUpdatedDate = '2023-10-09';
+// let lastUpdatedDate = '2023-10-10';
 
 const fetchPrayerTimeToday = async () => {
   const { location } = config;
