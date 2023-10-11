@@ -15,6 +15,10 @@ export const message = async (event: Event) => {
 
   const profile = await getProfile(employee_code);
 
+  logger.info(
+    `New message from ${employee_code} ${profile.name} ${message.text.content}`
+  );
+
   // /today
   if (message.text.content === '/today') {
     const formattedDate = getFormattedDate();
@@ -153,10 +157,6 @@ export const message = async (event: Event) => {
     content: '❌ Invalid command.',
     type: 'personal',
   });
-
-  logger.info(
-    `New message from ${employee_code} ${profile.name} ${message.text.content}`
-  );
 
   return { status: httpStatus.NOT_FOUND, response: {} };
 };
