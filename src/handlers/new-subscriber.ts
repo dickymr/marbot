@@ -14,7 +14,7 @@ export const newSubscriber = async (event: Event) => {
     '‍',
     `__Commands__:`,
     `- __/today__: View today's prayer times.`,
-    `- __/reminder [1-10 minutes]__: Set a reminder before prayer time.`,
+    `- __/reminder [0-10 minutes]__: Set a reminder before prayer time.`,
     `- __/start__: Activate prayer time notifications.`,
     `- __/stop__: Deactivate prayer time notifications and reminders.`,
     `- __/feedback message__: Send feedback or report any issues.`,
