@@ -42,7 +42,7 @@ export default {
   timeZone: 'Asia/Bangkok', // GMT+7
   activePrayerTime: {
     imsyak: false,
-    shubuh: true,
+    shubuh: false,
     terbit: false,
     dhuha: false,
     dzuhur: true,
