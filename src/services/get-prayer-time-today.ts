@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { format } from 'date-fns-tz';
 import config from '../config';
 import logger from '../config/logger';
@@ -33,18 +34,15 @@ const fetchPrayerTimeToday = async () => {
   const endpoint = `${GET_PRAYER_SCHEDULE_URL}/${location}/${year}/${month}.json`;
 
   try {
-    const response = await fetch(endpoint);
+    const response = await axios.get(endpoint);
 
-    if (!response.ok) {
-      throw new Error(`Failed to get prayer times: ${response.statusText}`);
-    }
-
-    const result: PrayerResponse[] = await response.json();
+    if (response.status !== 200) throw new Error(`Failed to get prayer times: ${response.statusText}`);
+    
+    const result: PrayerResponse[] = response.data;
 
     const resultToday = result.find(({ tanggal }) => tanggal === today);
     delete resultToday?.tanggal;
-
-    // @ts-ignore
+    
     prayerTimes = resultToday;
 
     logger.info(`Get prayer time today (${today}) is success`);

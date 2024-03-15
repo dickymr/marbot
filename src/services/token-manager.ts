@@ -1,3 +1,4 @@
+import axios from "axios";
 import httpStatus from 'http-status';
 import config from '../config';
 import { GET_ACCESS_TOKEN_URL } from '../constants';
@@ -8,24 +9,21 @@ let tokenExpireTimestamp = '';
 
 const getAppAccessToken = async () => {
   try {
-    const response = await fetch(GET_ACCESS_TOKEN_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        app_id: config.appId,
-        app_secret: config.appSecret,
-      }),
+    const response = await axios.post(GET_ACCESS_TOKEN_URL, {
+      app_id: config.appId,
+      app_secret: config.appSecret,
+    }, {
+      headers: { 'Content-Type': 'application/json', },
     });
 
-    if (!response.ok) throw new Error();
+    if (response.status !== 200) throw new Error();
+    
+    const result = response.data;
 
-    const data = await response.json();
-    if (data.code !== 0) throw new Error();
+    if (result.code !== 0) throw new Error();
 
-    appAccessToken = data.app_access_token;
-    tokenExpireTimestamp = data.expire;
+    appAccessToken = result.app_access_token;
+    tokenExpireTimestamp = result.expire;
   } catch (error) {
     throw new apiError(
       httpStatus.BAD_REQUEST,

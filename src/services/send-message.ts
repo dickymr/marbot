@@ -1,3 +1,4 @@
+import axios from "axios";
 import httpStatus from 'http-status';
 import { getAccessToken } from './';
 import {
@@ -66,18 +67,17 @@ const sendMessage = async ({
   }
 
   try {
-    const response = await fetch(URL, {
-      method: 'POST',
+    const response = await axios.post(URL, payload, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload),
     });
 
-    if (!response.ok) throw new Error();
+    if (response.status !== 200) throw new Error();
 
-    const data = await response.json();
+    const data = response.data;
+    
     if (data.code !== 0) throw new Error(data.message);
 
     logger.info(`Message sent successfully: ${senderId}`);
