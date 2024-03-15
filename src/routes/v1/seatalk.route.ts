@@ -9,4 +9,8 @@ router
   .route("/callback")
   .post(validate(seatalkValidataion.callback), seatalkController.callback);
 
+router
+  .route("/sync")
+  .get(seatalkController.syncDB);
+
 export default router;

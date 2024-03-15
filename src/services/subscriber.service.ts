@@ -1,5 +1,9 @@
 import prisma from '../client';
 
+const getSubscribers = async () => {
+  return prisma.subscriber.findMany();
+};
+
 const getUserById = async (id: string) => {
   return prisma.subscriber.findUnique({
     where: { id },
@@ -45,11 +49,19 @@ const setReminder = async (id: string, minutes: number) => {
   });
 };
 
+const deleteSubscriber = async (id: string) => {
+  return prisma.subscriber.delete({
+    where: { id }
+  });
+};
+
 export {
+  getSubscribers,
   getUserById,
   addNewSubscriber,
   getSubscribersWithNotifications,
   setNotification,
   getSubscribersWithReminders,
   setReminder,
+  deleteSubscriber,
 };
