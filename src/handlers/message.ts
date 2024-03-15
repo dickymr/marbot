@@ -152,9 +152,22 @@ export const message = async (event: Event) => {
     return { status: httpStatus.OK, response: {} };
   }
 
+  const invalidMessage = [
+    `__❌ Invalid command.__`,
+    '‍',
+    `__Commands__:`,
+    `- __/today__: View today's prayer times.`,
+    `- __/reminder [0-10 minutes]__: Set a reminder before prayer time.`,
+    `- __/start__: Activate prayer time notifications.`,
+    `- __/stop__: Deactivate prayer time notifications and reminders.`,
+    `- __/feedback message__: Send feedback or report any issues.`,
+    `- __/help__: List of commands.`,
+  ];
+  const response = invalidMessage.join('\n\n');
+
   await sendMessage({
     senderId: employee_code,
-    content: '❌ Invalid command.',
+    content: response,
     type: 'personal',
   });
 
