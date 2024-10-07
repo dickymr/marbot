@@ -9,6 +9,10 @@ const sendNotificationToSubscribers = async (message: string) => {
     subscribersWithNotifications.find((sub) => sub.id === id)
   );
 
+  console.log('====================================');
+  console.log(`Sending notifications to ${subscribers.length} subscribers`);
+  console.log('====================================');
+
   subscribers.forEach((subscriber: string) =>
     sendMessage({
       senderId: subscriber,

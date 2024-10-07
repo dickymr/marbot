@@ -14,6 +14,10 @@ const sendReminderToSubscribers = async (
     subscribersWithReminders.find((sub) => sub.id === id)
   );
 
+  console.log('====================================');
+  console.log(`Sending reminder to ${subscribers.length} subscribers`);
+  console.log('====================================');
+
   subscribers.forEach((subscriber: string) =>
     sendMessage({
       senderId: subscriber,
