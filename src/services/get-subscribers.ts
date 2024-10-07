@@ -20,8 +20,6 @@ const getSubscribers = async () => {
 
     if (result.code !== 0) throw new Error(result.message);
 
-    logger.info("Get subscribers success");
-
     return result.subscribers.employee_code;
   } catch (error) {
     logger.error(error);

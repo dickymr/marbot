@@ -26,7 +26,10 @@ export const newSubscriber = async (event: Event) => {
   const message = messages.join('\n\n');
 
   const profile = await getProfile(employee_code);
+
+  logger.info('====================================');
   logger.info(`New bot subscriber ${employee_code} ${profile.name}`);
+  logger.info('====================================');
 
   await sendMessage({
     senderId: employee_code,

@@ -1,3 +1,4 @@
+import logger from '../config/logger';
 import { getSubscribers, sendMessage } from '../services';
 import { getSubscribersWithNotifications } from '../services/subscriber.service';
 
@@ -9,9 +10,11 @@ const sendNotificationToSubscribers = async (message: string) => {
     subscribersWithNotifications.find((sub) => sub.id === id)
   );
 
-  console.log('====================================');
-  console.log(`Sending notifications to ${subscribers.length} subscribers`);
-  console.log('====================================');
+  if (subscribers.length > 0) {
+    logger.info('====================================');
+    logger.info(`Sending notifications to ${subscribers.length} subscribers`);
+    logger.info('====================================');
+  }
 
   subscribers.forEach((subscriber: string) =>
     sendMessage({

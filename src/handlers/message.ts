@@ -15,9 +15,9 @@ export const message = async (event: Event) => {
 
   const profile = await getProfile(employee_code);
 
-  console.log('====================================');
+  logger.info('====================================');
   logger.info(`New message from ${employee_code} ${profile.name} ${message.text.content}`);
-  console.log('====================================');
+  logger.info('====================================');
 
   // /today
   if (message.text.content === '/today') {
