@@ -1,13 +1,6 @@
-import getAccessToken from "./token-manager";
-import sendMessage from "./send-message";
-import getProfile from "./get-profile";
-import getPrayerTimeToday from "./get-prayer-time-today";
-import getSubscribers from "./get-subscribers";
+import getAccessToken from './token-manager';
+import sendMessage from './send-message';
+import getProfile from './get-profile';
+import getPrayerTimeToday from './get-prayer-time-today';
 
-export {
-  sendMessage,
-  getAccessToken,
-  getProfile,
-  getPrayerTimeToday,
-  getSubscribers,
-};
+export { sendMessage, getAccessToken, getProfile, getPrayerTimeToday };
