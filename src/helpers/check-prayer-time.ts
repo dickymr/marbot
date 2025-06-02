@@ -2,7 +2,7 @@
 
 import { parse } from 'date-fns';
 import { utcToZonedTime, format } from 'date-fns-tz';
-import { sendNotificationToSubscribers } from './';
+import { sendNotification } from './';
 import config from '../config';
 import { getPrayerTimeToday } from '../services';
 import { translatePrayerName } from '../utils';
@@ -35,7 +35,7 @@ const checkPrayerTime = async () => {
       ];
       const message = messages.join('\n\n');
 
-      sendNotificationToSubscribers(message);
+      sendNotification(message);
     }
   }
 };

@@ -57,14 +57,14 @@ export const message = async (event: Event) => {
     if (textMatch) {
       const minutes = parseInt(textMatch[1]);
 
-      await setReminder(employee_code, minutes);
+      await setReminder(employee_code, profile.name, minutes);
 
       // prettier-ignore
       response = minutes === 0
       ? '🔕 Reminder deactivated. You will no longer receive reminders.'
       : `🔔 Reminder set to __${minutes} minute${minutes !== 1 ? 's' : ''}__ before prayer time.`;
     } else {
-      response = '⚠️ Reminder should be between 0 and 10 minutes. Please use /reminder [0-10 minutes].';
+      response = '⚠️ Reminder should be between 0 and 10 minutes.';
     }
 
     await sendMessage({
@@ -78,7 +78,7 @@ export const message = async (event: Event) => {
 
   // /start
   if (message.text.content === '/start') {
-    await setNotification(employee_code, true);
+    await setNotification(employee_code, profile.name, true);
 
     const response = '🔔 Prayer time __notifications__ activated.';
     await sendMessage({
@@ -92,7 +92,7 @@ export const message = async (event: Event) => {
 
   // /stop
   if (message.text.content === '/stop') {
-    await setNotification(employee_code, false);
+    await setNotification(employee_code, profile.name, false);
 
     const response = '🔕 Prayer time __notifications__ deactivated.';
     await sendMessage({
@@ -129,10 +129,10 @@ export const message = async (event: Event) => {
     const message = [
       `__Commands__:`,
       `- __/today__: View today's prayer times.`,
-      `- __/reminder [0-10 minutes]__: Set a reminder before prayer time.`,
+      `- __/reminder [0-10]__ minutes: Set a reminder before prayer time.`,
       `- __/start__: Activate prayer time notifications.`,
       `- __/stop__: Deactivate prayer time notifications and reminders.`,
-      `- __/feedback message__: Send feedback or report any issues.`,
+      `- __/feedback [message]__: Send feedback or report any issues.`,
       `- __/help__: List of commands.`,
     ];
     const response = message.join('\n\n');
@@ -151,10 +151,10 @@ export const message = async (event: Event) => {
     '‍',
     `__Commands__:`,
     `- __/today__: View today's prayer times.`,
-    `- __/reminder [0-10 minutes]__: Set a reminder before prayer time.`,
+    `- __/reminder [0-10]__ minutes: Set a reminder before prayer time.`,
     `- __/start__: Activate prayer time notifications.`,
     `- __/stop__: Deactivate prayer time notifications and reminders.`,
-    `- __/feedback message__: Send feedback or report any issues.`,
+    `- __/feedback [message]__: Send feedback or report any issues.`,
     `- __/help__: List of commands.`,
   ];
   const response = invalidMessage.join('\n\n');

@@ -1,6 +1,6 @@
 import { parse, differenceInMinutes } from 'date-fns';
 import { utcToZonedTime, format } from 'date-fns-tz';
-import { sendReminderToSubscribers } from './';
+import { sendReminder } from './';
 import config from '../config';
 import { getPrayerTimeToday } from '../services';
 import { getNextPrayerString } from '../utils';
@@ -27,7 +27,7 @@ const checkReminder = async () => {
   // prettier-ignore
   const message = `In __${difference} ${difference > 1 ? 'minutes' : 'minute'} (${nextPrayerTime})__, it will be time for the __${nextPrayerName}__ prayer in Jakarta and the surrounding areas.`;
 
-  sendReminderToSubscribers(message, difference);
+  sendReminder(message, difference);
 };
 
 export default checkReminder;

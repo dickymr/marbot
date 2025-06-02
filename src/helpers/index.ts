@@ -1,11 +1,6 @@
 import checkPrayerTime from './check-prayer-time';
 import checkReminder from './check-reminder';
-import sendNotificationToSubscribers from './send-notification-to-subscribers';
-import sendReminderToSubscribers from './send-reminder-to-subscribers';
+import sendNotification from './send-notification';
+import sendReminder from './send-reminder';
 
-export {
-  checkPrayerTime,
-  checkReminder,
-  sendNotificationToSubscribers,
-  sendReminderToSubscribers,
-};
+export { checkPrayerTime, checkReminder, sendNotification, sendReminder };

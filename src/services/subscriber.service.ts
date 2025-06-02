@@ -29,7 +29,11 @@ const getSubscribersWithNotifications = async () => {
   });
 };
 
-const setNotification = async (id: string, state: boolean) => {
+const setNotification = async (id: string, name: string, state: boolean) => {
+  const subscriber = await getUserById(id);
+
+  if (!subscriber) await addNewSubscriber(id, name);
+
   return prisma.subscriber.update({
     where: { id },
     data: { notification: state },
@@ -42,7 +46,11 @@ const getSubscribersWithReminders = async (currentMinuteDifference: number) => {
   });
 };
 
-const setReminder = async (id: string, minutes: number) => {
+const setReminder = async (id: string, name: string, minutes: number) => {
+  const subscriber = await getUserById(id);
+
+  if (!subscriber) await addNewSubscriber(id, name);
+
   return prisma.subscriber.update({
     where: { id },
     data: { reminder: minutes },
@@ -51,7 +59,7 @@ const setReminder = async (id: string, minutes: number) => {
 
 const deleteSubscriber = async (id: string) => {
   return prisma.subscriber.delete({
-    where: { id }
+    where: { id },
   });
 };
 
