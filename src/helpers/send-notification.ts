@@ -4,7 +4,6 @@ import { getSubscribersWithNotifications } from '../services/subscriber.service'
 
 const sendNotification = async (message: string) => {
   const subscribersWithNotifications = await getSubscribersWithNotifications();
-  logger.info(JSON.stringify(subscribersWithNotifications, null, 2));
 
   if (subscribersWithNotifications.length > 0) {
     logger.info('====================================');
