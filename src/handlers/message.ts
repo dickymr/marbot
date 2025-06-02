@@ -3,11 +3,7 @@ import config from '../config';
 import logger from '../config/logger';
 import { getPrayerTimeToday, getProfile, sendMessage } from '../services';
 import { setNotification, setReminder } from '../services/subscriber.service';
-import {
-  getFormattedDate,
-  getNextPrayerString,
-  getPrayerTimesString,
-} from '../utils';
+import { getFormattedDate, getNextPrayerString, getPrayerTimesString } from '../utils';
 import { Event } from '../types';
 
 export const message = async (event: Event) => {
@@ -36,9 +32,8 @@ export const message = async (event: Event) => {
       '‍',
       `${prayerTimesString}`,
       '‍',
-      nextPrayerString
-        ? `__Next prayer time:__\n\n- __${nextPrayerString}__\n\n‍\n\n`
-        : '',
+      nextPrayerString ? `__Next prayer time:__\n\n- __${nextPrayerString}__\n\n‍\n\n` : '',
+      `Source: jadwalsholat.org`,
     ];
 
     const response = message.join('\n\n');
@@ -69,8 +64,7 @@ export const message = async (event: Event) => {
       ? '🔕 Reminder deactivated. You will no longer receive reminders.'
       : `🔔 Reminder set to __${minutes} minute${minutes !== 1 ? 's' : ''}__ before prayer time.`;
     } else {
-      response =
-        '⚠️ Reminder should be between 0 and 10 minutes. Please use /reminder [0-10 minutes].';
+      response = '⚠️ Reminder should be between 0 and 10 minutes. Please use /reminder [0-10 minutes].';
     }
 
     await sendMessage({

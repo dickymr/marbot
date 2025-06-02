@@ -28,9 +28,10 @@ const checkPrayerTime = async () => {
       // prettier-ignore
       const messages = [
         `__${time}__`,
-        `It's now the time for __${translatePrayerName(prayer)}__ prayer in Jakarta and surrounding areas.`,
+        `It's time for the __${translatePrayerName(prayer)}__ prayer in Jakarta and surrounding areas.`,
+        `May your prayers bring peace and blessings 🤲`,
         '‍',
-        'May your prayers be blessed 🤲'
+        `Source: jadwalsholat.org`,
       ];
       const message = messages.join('\n\n');
 
