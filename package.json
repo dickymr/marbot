@@ -20,7 +20,7 @@
     "build": "rimraf build && tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@prisma/client": "^4.7.1",
+    "@prisma/client": "^4.16.2",
     "@types/http-status": "^1.1.2",
     "axios": "^1.6.7",
     "compression": "^1.7.4",
@@ -55,7 +55,7 @@
     "lint-staged": "^13.1.0",
     "nodemon": "^2.0.20",
     "prettier": "^2.8.1",
-    "prisma": "^4.10.1",
+    "prisma": "^4.16.2",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.4"
   }
