@@ -11,13 +11,15 @@ const sendReminder = async (message: string, currentMinuteDifference: number) =>
     logger.info('====================================');
   }
 
-  subscribersWithReminders.forEach((subscriber) =>
+  subscribersWithReminders.forEach((subscriber) => {
     sendMessage({
       senderId: subscriber.id,
       content: message,
       type: 'personal',
-    })
-  );
+    }).catch((err) => {
+      console.error(`Failed to send to ${subscriber.id} ${subscriber.name}:`, err);
+    });
+  });
 };
 
 export default sendReminder;

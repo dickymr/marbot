@@ -11,13 +11,15 @@ const sendNotification = async (message: string) => {
     logger.info('====================================');
   }
 
-  subscribersWithNotifications.forEach((subscriber) =>
+  subscribersWithNotifications.forEach((subscriber) => {
     sendMessage({
       senderId: subscriber.id,
       content: message,
       type: 'personal',
-    })
-  );
+    }).catch((err) => {
+      console.error(`Failed to send to ${subscriber.id} ${subscriber.name}:`, err);
+    });
+  });
 };
 
 export default sendNotification;
