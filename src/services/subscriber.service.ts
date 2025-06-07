@@ -1,4 +1,5 @@
 import prisma from '../client';
+import { addNewLog } from './log.service';
 
 const getSubscribers = async () => {
   return prisma.subscriber.findMany();
@@ -33,6 +34,7 @@ const setNotification = async (id: string, name: string, state: boolean) => {
   const subscriber = await getUserById(id);
 
   if (!subscriber) await addNewSubscriber(id, name);
+  await addNewLog('server | new subscriber', 'success', `${id} | ${name}`);
 
   return prisma.subscriber.update({
     where: { id },
@@ -50,6 +52,7 @@ const setReminder = async (id: string, name: string, minutes: number) => {
   const subscriber = await getUserById(id);
 
   if (!subscriber) await addNewSubscriber(id, name);
+  await addNewLog('server | new subscriber', 'success', `${id} | ${name}`);
 
   return prisma.subscriber.update({
     where: { id },
