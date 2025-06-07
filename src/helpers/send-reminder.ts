@@ -1,5 +1,6 @@
 import logger from '../config/logger';
 import { sendMessage } from '../services';
+import { addNewLog } from '../services/log.service';
 import { getSubscribersWithReminders } from '../services/subscriber.service';
 
 const sendReminder = async (message: string, currentMinuteDifference: number) => {
@@ -10,6 +11,8 @@ const sendReminder = async (message: string, currentMinuteDifference: number) =>
     logger.info(`Sending reminder to ${subscribersWithReminders.length} subscribers`);
     logger.info('====================================');
   }
+
+  await addNewLog('server | reminder', 'success', subscribersWithReminders.length.toString());
 
   subscribersWithReminders.forEach((subscriber) => {
     sendMessage({

@@ -1,5 +1,6 @@
 import logger from '../config/logger';
 import { sendMessage } from '../services';
+import { addNewLog } from '../services/log.service';
 import { getSubscribersWithNotifications } from '../services/subscriber.service';
 
 const sendNotification = async (message: string) => {
@@ -10,6 +11,8 @@ const sendNotification = async (message: string) => {
     logger.info(`Sending notifications to ${subscribersWithNotifications.length} subscribers`);
     logger.info('====================================');
   }
+
+  await addNewLog('server | notification', 'success', subscribersWithNotifications.length.toString());
 
   subscribersWithNotifications.forEach((subscriber) => {
     sendMessage({

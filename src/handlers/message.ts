@@ -5,18 +5,20 @@ import { getPrayerTimeToday, getProfile, sendMessage } from '../services';
 import { setNotification, setReminder } from '../services/subscriber.service';
 import { getFormattedDate, getNextPrayerString, getPrayerTimesString } from '../utils';
 import { Event } from '../types';
+import { addNewLog } from '../services/log.service';
 
 export const message = async (event: Event) => {
   const { employee_code, message } = event;
+  const messageContent = message.text.content;
 
   const profile = await getProfile(employee_code);
 
   logger.info('====================================');
-  logger.info(`New message from ${employee_code} ${profile.name} ${message.text.content}`);
+  logger.info(`New message from ${employee_code} ${profile.name} ${messageContent}`);
   logger.info('====================================');
 
   // /today
-  if (message.text.content === '/today') {
+  if (messageContent === '/today') {
     const formattedDate = getFormattedDate();
     const prayerTimes = await getPrayerTimeToday();
 
@@ -44,15 +46,16 @@ export const message = async (event: Event) => {
       type: 'personal',
     });
 
+    await addNewLog(profile.name, 'success', messageContent);
+
     return { status: httpStatus.OK, response: {} };
   }
 
   // /reminder
-  if (message.text.content.includes('/reminder')) {
+  if (messageContent.includes('/reminder')) {
     let response = '';
 
-    const textMsg = message.text.content;
-    const textMatch = textMsg.match(/\/reminder ([0-9]|10)\b/);
+    const textMatch = messageContent.match(/\/reminder ([0-9]|10)\b/);
 
     if (textMatch) {
       const minutes = parseInt(textMatch[1]);
@@ -73,11 +76,13 @@ export const message = async (event: Event) => {
       type: 'personal',
     });
 
+    await addNewLog(profile.name, 'success', messageContent);
+
     return { status: httpStatus.OK, response: {} };
   }
 
   // /start
-  if (message.text.content === '/start') {
+  if (messageContent === '/start') {
     await setNotification(employee_code, profile.name, true);
 
     const response = '🔔 Prayer time __notifications__ activated.';
@@ -87,11 +92,13 @@ export const message = async (event: Event) => {
       type: 'personal',
     });
 
+    await addNewLog(profile.name, 'success', messageContent);
+
     return { status: httpStatus.OK, response: {} };
   }
 
   // /stop
-  if (message.text.content === '/stop') {
+  if (messageContent === '/stop') {
     await setNotification(employee_code, profile.name, false);
 
     const response = '🔕 Prayer time __notifications__ deactivated.';
@@ -101,13 +108,15 @@ export const message = async (event: Event) => {
       type: 'personal',
     });
 
+    await addNewLog(profile.name, 'success', messageContent);
+
     return { status: httpStatus.OK, response: {} };
   }
 
   // /feedback
-  if (message.text.content.includes('/feedback')) {
+  if (messageContent.includes('/feedback')) {
     const response = `Thank you for your feedback!\n\nHave a great day 🌟`;
-    const responseToFeedbackGroup = `${message.text.content}\n\n‍\n\nFrom: ${employee_code} | ${profile.name}`;
+    const responseToFeedbackGroup = `${messageContent}\n\n‍\n\nFrom: ${employee_code} | ${profile.name}`;
 
     await sendMessage({
       senderId: employee_code,
@@ -121,11 +130,13 @@ export const message = async (event: Event) => {
       type: 'group',
     });
 
+    await addNewLog(profile.name, 'success', messageContent);
+
     return { status: httpStatus.OK, response: {} };
   }
 
   // /help
-  if (message.text.content === '/help') {
+  if (messageContent === '/help') {
     const message = [
       `__Commands__:`,
       `- __/today__: View today's prayer times.`,
@@ -142,6 +153,8 @@ export const message = async (event: Event) => {
       content: response,
       type: 'personal',
     });
+
+    await addNewLog(profile.name, 'success', messageContent);
 
     return { status: httpStatus.OK, response: {} };
   }
@@ -164,6 +177,8 @@ export const message = async (event: Event) => {
     content: response,
     type: 'personal',
   });
+
+  await addNewLog(profile.name, 'error', messageContent);
 
   return { status: httpStatus.NOT_FOUND, response: {} };
 };
