@@ -1,7 +1,7 @@
 import logger from '../config/logger';
 import { sendMessage } from '../services';
 import { addNewLog } from '../services/log.service';
-import { getSubscribersWithNotifications } from '../services/subscriber.service';
+import { getSubscribersWithNotifications, setInactive } from '../services/subscriber.service';
 
 const sendNotification = async (message: string) => {
   const subscribersWithNotifications = await getSubscribersWithNotifications();
@@ -20,6 +20,8 @@ const sendNotification = async (message: string) => {
       content: message,
       type: 'personal',
     }).catch((err) => {
+      setInactive(subscriber.id);
+      addNewLog('server | set inactive', 'success', subscriber.name);
       console.error(`Failed to send to ${subscriber.id} ${subscriber.name}:`, err);
     });
   });

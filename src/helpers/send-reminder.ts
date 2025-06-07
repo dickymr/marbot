@@ -1,7 +1,7 @@
 import logger from '../config/logger';
 import { sendMessage } from '../services';
 import { addNewLog } from '../services/log.service';
-import { getSubscribersWithReminders } from '../services/subscriber.service';
+import { getSubscribersWithReminders, setInactive } from '../services/subscriber.service';
 
 const sendReminder = async (message: string, currentMinuteDifference: number) => {
   const subscribersWithReminders = await getSubscribersWithReminders(currentMinuteDifference);
@@ -20,6 +20,8 @@ const sendReminder = async (message: string, currentMinuteDifference: number) =>
       content: message,
       type: 'personal',
     }).catch((err) => {
+      setInactive(subscriber.id);
+      addNewLog('server | set inactive', 'success', subscriber.name);
       console.error(`Failed to send to ${subscriber.id} ${subscriber.name}:`, err);
     });
   });

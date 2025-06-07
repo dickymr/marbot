@@ -10,6 +10,7 @@ datasource db {
 model Subscriber {
   id           String   @id
   name         String
+  isActive     Boolean  @default(true)
   notification  Boolean  @default(true)
   reminder     Int      @default(0)
   createdAt    DateTime @default(now())

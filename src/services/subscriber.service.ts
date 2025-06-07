@@ -25,7 +25,7 @@ const addNewSubscriber = async (id: string, name: string) => {
 
 const getSubscribersWithNotifications = async () => {
   return prisma.subscriber.findMany({
-    where: { notification: true },
+    where: { isActive: true, notification: true },
   });
 };
 
@@ -42,7 +42,7 @@ const setNotification = async (id: string, name: string, state: boolean) => {
 
 const getSubscribersWithReminders = async (currentMinuteDifference: number) => {
   return prisma.subscriber.findMany({
-    where: { reminder: currentMinuteDifference },
+    where: { isActive: true, reminder: currentMinuteDifference },
   });
 };
 
@@ -63,6 +63,13 @@ const deleteSubscriber = async (id: string) => {
   });
 };
 
+const setInactive = async (id: string) => {
+  return prisma.subscriber.update({
+    where: { id },
+    data: { isActive: false },
+  });
+};
+
 export {
   getSubscribers,
   getUserById,
@@ -72,4 +79,5 @@ export {
   getSubscribersWithReminders,
   setReminder,
   deleteSubscriber,
+  setInactive,
 };
