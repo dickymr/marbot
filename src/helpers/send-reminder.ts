@@ -6,13 +6,17 @@ import { getSubscribersWithReminders, setInactive } from '../services/subscriber
 const sendReminder = async (message: string, currentMinuteDifference: number) => {
   const subscribersWithReminders = await getSubscribersWithReminders(currentMinuteDifference);
 
-  if (subscribersWithReminders.length > 0) {
-    logger.info('====================================');
-    logger.info(`Sending reminder to ${subscribersWithReminders.length} subscribers`);
-    logger.info('====================================');
-  }
+  if (subscribersWithReminders.length === 0) return;
 
-  await addNewLog('server | reminder', 'success', subscribersWithReminders.length.toString());
+  logger.info('====================================');
+  logger.info(`Sending reminder to ${subscribersWithReminders.length} subscribers`);
+  logger.info('====================================');
+
+  await addNewLog(
+    `server | reminder ${currentMinuteDifference}`,
+    'success',
+    subscribersWithReminders.length.toString()
+  );
 
   subscribersWithReminders.forEach((subscriber) => {
     sendMessage({
