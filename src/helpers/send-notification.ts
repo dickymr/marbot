@@ -18,7 +18,7 @@ const sendNotification = async (message: string) => {
     sendMessage({
       senderId: subscriber.id,
       content: message,
-      type: 'personal',
+      type: /^\d+$/.test(subscriber.id) ? 'personal' : 'group',
     }).catch((err) => {
       setInactive(subscriber.id);
       addNewLog('server | set inactive', 'success', subscriber.name);

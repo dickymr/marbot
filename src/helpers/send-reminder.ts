@@ -22,7 +22,7 @@ const sendReminder = async (message: string, currentMinuteDifference: number) =>
     sendMessage({
       senderId: subscriber.id,
       content: message,
-      type: 'personal',
+      type: /^\d+$/.test(subscriber.id) ? 'personal' : 'group',
     }).catch((err) => {
       setInactive(subscriber.id);
       addNewLog('server | set inactive', 'success', subscriber.name);
