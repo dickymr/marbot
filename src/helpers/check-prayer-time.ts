@@ -30,10 +30,9 @@ const checkPrayerTime = async () => {
         `__${time}__`,
         `It's time for the __${translatePrayerName(prayer)}__ prayer in Jakarta and surrounding areas.`,
         `May your prayers bring peace and blessings 🤲`,
-        '‍',
         `Source: jadwalsholat.org`,
       ];
-      const message = messages.join('\n\n');
+      const message = messages.join('\n');
 
       sendNotification(message);
     }
