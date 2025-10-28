@@ -13,7 +13,7 @@ const callback = catchAsync(async (req, res) => {
     return;
   }
 
-  throw new apiError(httpStatus.NOT_FOUND, 'Event type not found');
+  throw new apiError(httpStatus.NOT_FOUND, `Event type not found: ${event_type}`);
 });
 
 export default { callback };
