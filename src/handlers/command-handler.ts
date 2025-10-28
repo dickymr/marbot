@@ -175,8 +175,10 @@ export const handleCommand = async ({
       `- __/stop__: Deactivate prayer time notifications and reminders.`,
       `- __/feedback [message]__: Send feedback or report any issues.`,
       `- __/help__: List of commands.`,
+      '‍',
+      `__Note:__ In groups, mention the bot first: __@MarBot /today__`,
     ];
-    const response = message.join('\n\n');
+    const response = message.join('\n');
 
     await sendMessage({
       senderId: targetId,
@@ -199,8 +201,10 @@ export const handleCommand = async ({
     `- __/stop__: Deactivate prayer time notifications and reminders.`,
     `- __/feedback [message]__: Send feedback or report any issues.`,
     `- __/help__: List of commands.`,
+    '‍',
+    `__Note:__ In groups, mention the bot first: __@MarBot /today__`,
   ];
-  const response = invalidMessage.join('\n\n');
+  const response = invalidMessage.join('\n');
 
   await sendMessage({
     senderId: targetId,
