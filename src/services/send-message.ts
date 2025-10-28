@@ -1,10 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 import httpStatus from 'http-status';
 import { getAccessToken } from './';
-import {
-  SEND_MESSAGE_GROUP_URL,
-  SEND_MESSAGE_PERSONAL_URL,
-} from '../constants';
+import { SEND_MESSAGE_GROUP_URL, SEND_MESSAGE_PERSONAL_URL } from '../constants';
 import logger from '../config/logger';
 import apiError from '../utils/apiError';
 
@@ -14,17 +11,13 @@ interface SendMessage {
   type: 'personal' | 'group';
 }
 
-interface MessageMarkdown {
-  tag: 'markdown';
-  markdown: { content: string };
-}
 interface MessageText {
   tag: 'text';
-  text: { content: string };
+  text: { format: number; content: string };
 }
 interface PersonalPayload {
   employee_code: string;
-  message: MessageMarkdown;
+  message: MessageText;
 }
 interface GroupPayload {
   group_id: string;
@@ -33,11 +26,7 @@ interface GroupPayload {
 
 type Payload = PersonalPayload | GroupPayload;
 
-const sendMessage = async ({
-  senderId,
-  content,
-  type = 'personal',
-}: SendMessage) => {
+const sendMessage = async ({ senderId, content, type = 'personal' }: SendMessage) => {
   const accessToken = await getAccessToken();
 
   let URL = '';
@@ -45,12 +34,12 @@ const sendMessage = async ({
 
   const payloadPersonal: PersonalPayload = {
     employee_code: senderId,
-    message: { tag: 'markdown', markdown: { content } },
+    message: { tag: 'text', text: { format: 1, content } },
   };
 
   const payloadGroup: GroupPayload = {
     group_id: senderId,
-    message: { tag: 'text', text: { content } },
+    message: { tag: 'text', text: { format: 1, content } },
   };
 
   switch (type) {
@@ -77,15 +66,12 @@ const sendMessage = async ({
     if (response.status !== 200) throw new Error();
 
     const data = response.data;
-    
+
     if (data.code !== 0) throw new Error(data.message);
 
     logger.info(`Message sent successfully: ${senderId}`);
   } catch (error) {
-    throw new apiError(
-      httpStatus.BAD_REQUEST,
-      `Failed to send message, ${error}`
-    );
+    throw new apiError(httpStatus.BAD_REQUEST, `Failed to send message, ${error}`);
   }
 };
 

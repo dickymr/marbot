@@ -18,7 +18,8 @@ export interface Event {
   employee_code: string;
   message: {
     tag: string;
-    text: { content: string };
+    text: { content: string; plain_text: string };
+    sender: { employee_code: string };
   };
   group: any;
   inviter: any;

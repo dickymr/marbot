@@ -36,7 +36,7 @@ const getPrayerTimesString = (prayerTimes: Prayer) => {
 
   return Object.entries(prayerTimes)
     .map(([key, value]) => `- ${translatePrayerName(key)}: ${value}`)
-    .join('\n\n');
+    .join('\n');
 };
 
 const getNextPrayerString = (prayerTimes: Prayer) => {
@@ -52,10 +52,7 @@ const getNextPrayerString = (prayerTimes: Prayer) => {
   }
 
   for (const [prayer, time] of Object.entries(filteredPrayerTimes)) {
-    if (
-      parse(time, 'HH:mm', currentDate) >
-      parse(formattedTime, 'HH:mm', currentDate)
-    ) {
+    if (parse(time, 'HH:mm', currentDate) > parse(formattedTime, 'HH:mm', currentDate)) {
       return `${translatePrayerName(prayer)}: ${time}`;
     }
   }
