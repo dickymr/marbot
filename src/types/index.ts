@@ -17,6 +17,7 @@ export interface Event {
   seatalk_challenge: string;
   employee_code: string;
   message: {
+    receiver?: string;
     tag: string;
     text: { content: string; plain_text: string };
     sender: { employee_code: string };
