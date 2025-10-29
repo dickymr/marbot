@@ -21,6 +21,7 @@ export const handleCommand = async ({
 }: CommandHandlerParams) => {
   const group = messageType === 'group' ? await getGroup(targetId) : null;
   const profile = await getProfile(employee_code);
+  const name = messageType === 'group' ? group.group_name : profile.name;
 
   logger.info('====================================');
   logger.info(
@@ -59,7 +60,7 @@ export const handleCommand = async ({
       type: messageType,
     });
 
-    await addNewLog(profile.name, 'success', messageContent);
+    await addNewLog(name, 'success', messageContent);
 
     return { status: httpStatus.OK, response: {} };
   }
@@ -160,7 +161,7 @@ export const handleCommand = async ({
       type: 'group',
     });
 
-    await addNewLog(profile.name, 'success', messageContent);
+    await addNewLog(name, 'success', messageContent);
 
     return { status: httpStatus.OK, response: {} };
   }
@@ -186,7 +187,7 @@ export const handleCommand = async ({
       type: messageType,
     });
 
-    await addNewLog(profile.name, 'success', messageContent);
+    await addNewLog(name, 'success', messageContent);
 
     return { status: httpStatus.OK, response: {} };
   }
@@ -212,7 +213,7 @@ export const handleCommand = async ({
     type: messageType,
   });
 
-  await addNewLog(profile.name, 'error', messageContent);
+  await addNewLog(name, 'error', messageContent);
 
   return { status: httpStatus.NOT_FOUND, response: {} };
 };
