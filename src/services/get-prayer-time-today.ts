@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { format } from 'date-fns-tz';
-import { CookieJar } from 'tough-cookie';
+// import { CookieJar } from 'tough-cookie';
 import config from '../config';
 import logger from '../config/logger';
 import { Prayer, PrayerResponse } from '../types';
@@ -51,64 +51,64 @@ const fetchPrayerTimeTodayJadwalSholat = async () => {
   }
 };
 
-const fetchPrayerTimeTodayKemenag = async () => {
-  const { kemenagBaseUrl, kemenagPrayerApiUrl, kemenagLocationX, kemenagLocationY } = config;
+// const fetchPrayerTimeTodayKemenag = async () => {
+//   const { kemenagBaseUrl, kemenagPrayerApiUrl, kemenagLocationX, kemenagLocationY } = config;
 
-  const today = format(new Date(), 'yyyy-MM-dd', { timeZone: config.timeZone });
-  const year = today.split('-')[0];
-  const month = today.split('-')[1];
+//   const today = format(new Date(), 'yyyy-MM-dd', { timeZone: config.timeZone });
+//   const year = today.split('-')[0];
+//   const month = today.split('-')[1];
 
-  if (lastUpdatedDate !== today) {
-    lastUpdatedDate = today;
-  }
+//   if (lastUpdatedDate !== today) {
+//     lastUpdatedDate = today;
+//   }
 
-  const headers = {
-    'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-    'x-requested-with': 'XMLHttpRequest',
-    Referer: `${kemenagBaseUrl}/`,
-  };
+//   const headers = {
+//     'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+//     'x-requested-with': 'XMLHttpRequest',
+//     Referer: `${kemenagBaseUrl}/`,
+//   };
 
-  const body = new URLSearchParams({
-    x: kemenagLocationX,
-    y: kemenagLocationY,
-    bln: String(parseInt(month, 10)),
-    thn: year,
-  }).toString();
+//   const body = new URLSearchParams({
+//     x: kemenagLocationX,
+//     y: kemenagLocationY,
+//     bln: String(parseInt(month, 10)),
+//     thn: year,
+//   }).toString();
 
-  try {
-    const { wrapper } = await import('axios-cookiejar-support');
-    const client = wrapper(axios.create({ jar: new CookieJar(), timeout: 15000 }));
-    await client.get(`${kemenagBaseUrl}/`, { headers });
+//   try {
+//     const { wrapper } = await import('axios-cookiejar-support');
+//     const client = wrapper(axios.create({ jar: new CookieJar(), timeout: 15000 }));
+//     await client.get(`${kemenagBaseUrl}/`, { headers });
 
-    const response = await client.post(kemenagPrayerApiUrl, body, { headers });
+//     const response = await client.post(kemenagPrayerApiUrl, body, { headers });
 
-    if (response.status !== 200) throw new Error(`Failed to get prayer times: ${response.statusText}`);
+//     if (response.status !== 200) throw new Error(`Failed to get prayer times: ${response.statusText}`);
 
-    const result = response.data?.data;
+//     const result = response.data?.data;
 
-    const resultToday = result[today];
+//     const resultToday = result[today];
 
-    prayerTimes = {
-      imsyak: resultToday.imsak,
-      shubuh: resultToday.subuh,
-      terbit: resultToday.terbit,
-      dhuha: resultToday.dhuha,
-      dzuhur: resultToday.dzuhur,
-      ashr: resultToday.ashar,
-      magrib: resultToday.maghrib,
-      isya: resultToday.isya,
-    };
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
+//     prayerTimes = {
+//       imsyak: resultToday.imsak,
+//       shubuh: resultToday.subuh,
+//       terbit: resultToday.terbit,
+//       dhuha: resultToday.dhuha,
+//       dzuhur: resultToday.dzuhur,
+//       ashr: resultToday.ashar,
+//       magrib: resultToday.maghrib,
+//       isya: resultToday.isya,
+//     };
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+// };
 
 const getPrayerTimeToday = async (source: 'kemenag' | 'jadwalsholat' = 'kemenag') => {
   const today = format(new Date(), 'yyyy-MM-dd', { timeZone: config.timeZone });
 
   if (!prayerTimes || lastUpdatedDate !== today) {
     if (source === 'kemenag') {
-      await fetchPrayerTimeTodayKemenag();
+      // await fetchPrayerTimeTodayKemenag();
     } else {
       await fetchPrayerTimeTodayJadwalSholat();
     }
