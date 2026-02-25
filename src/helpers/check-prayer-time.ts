@@ -8,7 +8,7 @@ import { getPrayerTimeToday } from '../services';
 import { translatePrayerName } from '../utils';
 
 const checkPrayerTime = async () => {
-  const prayerTimes = await getPrayerTimeToday();
+  const prayerTimes = await getPrayerTimeToday('kemenag');
 
   const now = new Date();
   const localTime = utcToZonedTime(now, config.timeZone);
