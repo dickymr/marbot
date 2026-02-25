@@ -8,7 +8,7 @@ const callback = catchAsync(async (req, res) => {
   const { event_type, event } = req.body;
 
   if (event_type in handlers) {
-    const { status, response } = await handlers[event_type](event);
+    const { status = httpStatus.OK, response } = await handlers[event_type](event);
     res.status(status).send(response);
     return;
   }
