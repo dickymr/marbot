@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { wrapper } from 'axios-cookiejar-support';
 import { format } from 'date-fns-tz';
 import { CookieJar } from 'tough-cookie';
 import config from '../config';
@@ -77,6 +76,7 @@ const fetchPrayerTimeTodayKemenag = async () => {
   }).toString();
 
   try {
+    const { wrapper } = await import('axios-cookiejar-support');
     const client = wrapper(axios.create({ jar: new CookieJar(), timeout: 15000 }));
     await client.get(`${kemenagBaseUrl}/`, { headers });
 
