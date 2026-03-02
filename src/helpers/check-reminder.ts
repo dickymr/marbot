@@ -11,7 +11,7 @@ const checkReminder = async () => {
   if (!prayerTimes) return null;
 
   const now = new Date();
-  const localTime = format(utcToZonedTime(now, config.timeZone), 'HH:mm');
+  const localTime = format(utcToZonedTime(now, config.timezone), 'hh:mm');
 
   const nextPrayerString = getNextPrayerString(prayerTimes);
   const nextPrayerName = nextPrayerString?.split(': ')[0] || '';
@@ -22,7 +22,7 @@ const checkReminder = async () => {
     parse(localTime, 'HH:mm', new Date())
   );
 
-  if (!difference || difference > 10) return;
+  if (!difference || difference >= 10) return;
 
   // prettier-ignore
   const message = `In __${difference} ${difference > 1 ? 'minutes' : 'minute'} (${nextPrayerTime})__, it will be time for the __${nextPrayerName}__ prayer in Jakarta and the surrounding areas.`;
