@@ -47,7 +47,7 @@ export default {
   databaseUrl: envVars.DATABASE_URL,
 
   // Jadwalsholat API
-  jadwalsholatApiUrl: envVars.JADWAL_SHOLAT_API_URL,
+  jadwalsholatApiUrl: envVars.JADWAL_SHOLAT_PRAYER_API_URL,
   location: 'jakartaselatan',
 
   // Kemenag API
