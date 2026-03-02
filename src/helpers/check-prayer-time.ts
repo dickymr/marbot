@@ -8,7 +8,9 @@ import { getPrayerTimeToday } from '../services';
 import { translatePrayerName } from '../utils';
 
 const checkPrayerTime = async () => {
-  const prayerTimes = await getPrayerTimeToday('jadwalsholat');
+  const source = config.activeJadwalsholatSource;
+
+  const prayerTimes = await getPrayerTimeToday(source);
   if (!prayerTimes) return;
 
   const now = new Date();
@@ -31,7 +33,7 @@ const checkPrayerTime = async () => {
         `__${time}__`,
         `It's time for the __${translatePrayerName(prayer)}__ prayer in Jakarta and surrounding areas.`,
         `May your prayers bring peace and blessings 🤲`,
-        `Source: jadwalsholat.org`,
+        `Source: ${source === 'kemenag' ? 'bimasislam.kemenag.go.id' : 'jadwalsholat.org'}`,
       ];
       const message = messages.join('\n');
 

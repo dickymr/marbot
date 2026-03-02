@@ -27,7 +27,7 @@ export const handleCommand = async ({
   logger.info(
     `(${messageType}) Command from ${messageType === 'group' ? `${group.group_name} | ` : ''}${
       profile.name
-    } : ${messageContent}`
+    } : ${messageContent}`,
   );
   logger.info('====================================');
 
@@ -49,7 +49,7 @@ export const handleCommand = async ({
       `${prayerTimesString}`,
       '‍',
       nextPrayerString ? `__Next prayer time:__\n- __${nextPrayerString}__\n` : '',
-      `Source: jadwalsholat.org`,
+      `Source: ${config.activeJadwalsholatSource === 'kemenag' ? 'bimasislam.kemenag.go.id' : 'jadwalsholat.org'}`,
     ];
 
     const response = message.join('\n');

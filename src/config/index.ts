@@ -17,6 +17,7 @@ const envVarsSchema = Joi.object()
     DATABASE_URL: Joi.string().required(),
     KEMENAG_LOCATION_X: Joi.string().optional(),
     KEMENAG_LOCATION_Y: Joi.string().optional(),
+    ACTIVE_JADWAL_SHOLAT_SOURCE: Joi.string().valid('jadwalsholat', 'kemenag').required(),
   })
   .unknown();
 
@@ -51,6 +52,9 @@ export default {
   kemenagPrayerApiUrl: envVars.KEMENAG_PRAYER_API_URL,
   kemenagLocationX: envVars.KEMENAG_LOCATION_X,
   kemenagLocationY: envVars.KEMENAG_LOCATION_Y,
+
+  // Jadwalsholat Source
+  activeJadwalsholatSource: envVars.ACTIVE_JADWAL_SHOLAT_SOURCE,
 
   // Active Prayer Time
   activePrayerTime: {
