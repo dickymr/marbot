@@ -10,17 +10,16 @@ const envVarsSchema = Joi.object()
     PORT: Joi.number().default(3000),
     APP_ID: Joi.string().required(),
     APP_SECRET: Joi.string().required(),
+    SEATALK_API_URL: Joi.string().required(),
     MY_EMPLOYEE_ID: Joi.string().required(),
     GROUP_FEEDBACK_ID: Joi.string().required(),
-    SEATALK_API_URL: Joi.string().required(),
-    PRAYER_API_URL: Joi.string().required(),
     DATABASE_URL: Joi.string().required(),
+    ACTIVE_JADWAL_SHOLAT_SOURCE: Joi.string().valid('jadwalsholat', 'kemenag').required(),
     JADWAL_SHOLAT_API_URL: Joi.string().optional(),
     KEMENAG_BASE_URL: Joi.string().optional(),
     KEMENAG_PRAYER_API_URL: Joi.string().optional(),
     KEMENAG_LOCATION_X: Joi.string().optional(),
     KEMENAG_LOCATION_Y: Joi.string().optional(),
-    ACTIVE_JADWAL_SHOLAT_SOURCE: Joi.string().valid('jadwalsholat', 'kemenag').required(),
   })
   .unknown();
 
