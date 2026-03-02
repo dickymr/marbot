@@ -76,8 +76,9 @@ const fetchPrayerTimeTodayKemenag = async () => {
   }).toString();
 
   try {
-    const { wrapper } = await import('axios-cookiejar-support');
-    const client = wrapper(axios.create({ jar: new CookieJar(), timeout: 15000 }));
+    // eslint-disable-next-line @typescript-eslint/no-var-requires -- v5 is CommonJS; dynamic import compiles to require() and fails with ESM
+    const { wrapper } = require('axios-cookiejar-support');
+    const client = wrapper(axios.create({ jar: new CookieJar(), timeout: 15000 } as any));
     await client.get(`${kemenagBaseUrl}/`, { headers });
 
     const response = await client.post(kemenagPrayerApiUrl, body, { headers });
